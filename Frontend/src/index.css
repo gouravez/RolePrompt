@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap");
+@import "tailwindcss";
+
+:root {
+  /* Background system (richer depth) */
+  --color-bg: #0E0D0C;        /* deeper, more cinematic */
+  --color-surface: #171615;   /* primary surface */
+  --color-surface-2: #1F1D1B; /* elevated surface */
+
+  /* Typography */
+  --color-primary: #FAFAF9;   /* slightly brighter, crisper */
+  --color-secondary: #A1A09A; /* more neutral, less muddy */
+
+  /* Accent (more premium tone) */
+  --color-accent: #D6C3A3;        /* refined beige (less dull) */
+  --color-accent-strong: #F1DFC2; /* elegant highlight */
+
+  /* Borders */
+  --color-border: #262320;   /* softer, less visible */
+  --color-border-soft: rgba(255,255,255,0.06);
+
+  /* Optional glow (THIS adds premium feel) */
+  --color-glow: rgba(214, 195, 163, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.auth-slide {
+  animation: slideIn 0.35s ease both;
+}
+.auth-input:focus {
+  border-color: #1c1917 !important;
+}
