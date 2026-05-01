@@ -1,6 +1,6 @@
 const authRouter = require("express").Router();
-const authController = require("../controllers/auth.controllers");
-const { authUser } = require("../middleware/auth.middleware");
+const authController = require("../controllers/auth.controller");
+const { authUser } = require("../middlewares/auth.middleware");
 
 /**
  * @route POST /api/auth/register

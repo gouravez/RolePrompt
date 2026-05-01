@@ -91,6 +91,11 @@ const interviewReportSchema = z.object({
     .describe(
       "The title of the job for which the interview report is generated",
     ),
+  title: z
+    .string()
+    .describe(
+      "The title of the job for which the interview report is generated",
+    ),
 });
 
 async function generateInterviewReport({
@@ -99,11 +104,17 @@ async function generateInterviewReport({
   jobDescription,
 }) {
   const prompt = `
-Generate an interview report STRICTLY in the following JSON format.
+Generate an interview report STRICTLY in valid JSON.
 
-DO NOT add extra fields.
-DO NOT change field names.
-DO NOT omit any field.
+Rules:
+- Return ONLY JSON
+- No markdown
+- No explanation
+- No extra fields
+- Do not change field names
+- Do not omit any field
+- Keep answers realistic and professional
+- matchScore must be between 0 and 100
 
 Required JSON structure:
 {
@@ -138,24 +149,61 @@ Required JSON structure:
   "title": string
 }
 
+Generate:
+- 5 technicalQuestions
+- 5 behavioralQuestions
+- 3 to 5 skillGaps
+- 7 day preparationPlan
+
 Candidate Data:
-Resume: ${resume}
-Self Description: ${selfDescription}
-Job Description: ${jobDescription}
+
+Resume:
+${resume}
+
+Self Description:
+${selfDescription}
+
+Job Description:
+${jobDescription}
 `;
 
-  const response = await ai.models.generateContent({
-    model: "gemini-3-flash-preview",
+  const requestConfig = {
+    model: "gemini-2.5-flash",
     contents: prompt,
     config: {
       responseMimeType: "application/json",
-      responseSchema: zodToJsonSchema(interviewReportSchema),
     },
-  });
+  };
 
-  console.log(response.text);
+  try {
+    const response = await ai.models.generateContent(requestConfig);
 
-  return JSON.parse(response.text);
+    const parsed = JSON.parse(response.text);
+    // console.log(parsed);
+    return parsed;
+  } catch (error) {
+    console.log("Gemini Error:", error);
+
+    if (error.status === 429) {
+      return {
+        matchScore: 0,
+        technicalQuestions: [],
+        behavioralQuestions: [],
+        skillGaps: [],
+        preparationPlan: [],
+        title: "Quota Exceeded. Try Again Later.",
+      };
+    }
+
+    return {
+      matchScore: 0,
+      technicalQuestions: [],
+      behavioralQuestions: [],
+      skillGaps: [],
+      preparationPlan: [],
+      title: "Failed To Generate Report",
+    };
+  }
 }
 
 async function generatePdfFromHtml(htmlContent) {
@@ -166,10 +214,10 @@ async function generatePdfFromHtml(htmlContent) {
   const pdfBuffer = await page.pdf({
     format: "A4",
     margin: {
-      top: "20mm",
-      bottom: "20mm",
-      left: "15mm",
-      right: "15mm",
+      top: "10mm",
+      bottom: "10mm",
+      left: "10mm",
+      right: "10mm",
     },
   });
 

@@ -3,21 +3,21 @@
 
 :root {
   /* Background system (richer depth) */
-  --color-bg: #0E0D0C;        /* deeper, more cinematic */
-  --color-surface: #171615;   /* primary surface */
-  --color-surface-2: #1F1D1B; /* elevated surface */
+  --color-bg: #0e0d0c; /* deeper, more cinematic */
+  --color-surface: #171615; /* primary surface */
+  --color-surface-2: #1f1d1b; /* elevated surface */
 
   /* Typography */
-  --color-primary: #FAFAF9;   /* slightly brighter, crisper */
-  --color-secondary: #A1A09A; /* more neutral, less muddy */
+  --color-primary: #fafaf9; /* slightly brighter, crisper */
+  --color-secondary: #a1a09a; /* more neutral, less muddy */
 
   /* Accent (more premium tone) */
-  --color-accent: #D6C3A3;        /* refined beige (less dull) */
-  --color-accent-strong: #F1DFC2; /* elegant highlight */
+  --color-accent: #d6c3a3; /* refined beige (less dull) */
+  --color-accent-strong: #f1dfc2; /* elegant highlight */
 
   /* Borders */
-  --color-border: #262320;   /* softer, less visible */
-  --color-border-soft: rgba(255,255,255,0.06);
+  --color-border: #262320; /* softer, less visible */
+  --color-border-soft: rgba(255, 255, 255, 0.06);
 
   /* Optional glow (THIS adds premium feel) */
   --color-glow: rgba(214, 195, 163, 0.18);
@@ -46,6 +46,17 @@
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

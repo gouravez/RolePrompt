@@ -74,26 +74,41 @@ const preparationPlanSchema = new mongoose.Schema({
   ],
 });
 
-const reportSchema = new mongoose.Schema({
-  jobDesription: {
-    type: String,
-    required: [true, "Job Description required"],
+const reportSchema = new mongoose.Schema(
+  {
+    jobDescription: {
+      type: String,
+      required: [true, "Job Description required"],
+    },
+    resume: {
+      type: String,
+    },
+    selfDescription: {
+      type: String,
+    },
+    matchScore: {
+      type: Number,
+      min: 0,
+      max: 100,
+    },
+    technicalQuestions: [technicalQuestionSchema],
+    behavioralQuestions: [behavioralQuestionSchema],
+    skillGaps: [skillGapSchema],
+    preparationPlan: [preparationPlanSchema],
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    title: {
+      type: String,
+      required: [true, "Job title is required"],
+    },
   },
-  resume: {
-    type: String,
+  {
+    timestamps: true,
   },
-  selfDescription: {
-    type: String,
-  },
-  matchScore: {
-    type: Number,
-    min: 0,
-    max: 100,
-  },
-  technicalQuestions: [technicalQuestionSchema],
-  behavioralQuestions: [behavioralQuestionSchema],
-  skillGaps: [skillGapSchema],
-  preparationPlan: [preparationPlanSchema],
-});
+);
 
 const reportModel = mongoose.model("Report", reportSchema);
+
+module.exports = reportModel;
