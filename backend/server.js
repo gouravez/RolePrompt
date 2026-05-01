@@ -8,6 +8,6 @@ const { resume, selfDescription, JD } = require("./src/services/temp");
 connectDB();
 generateInterviewReport({resume, JD, selfDescription});
 
-app.listen(process.env.PORT, () => {
+app.listen(3000, () => {
   console.log(`Server is running`);
 });
